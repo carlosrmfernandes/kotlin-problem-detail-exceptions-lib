@@ -3,6 +3,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.25"
 	id("org.springframework.boot") version "3.3.3"
 	id("io.spring.dependency-management") version "1.1.6"
+	`maven-publish`
 }
 
 group = "io.carlosrmfernandes"
@@ -10,7 +11,7 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion.set(JavaLanguageVersion.of(21))
 	}
 }
 
@@ -28,12 +29,6 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
 	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 	testImplementation("io.mockk:mockk:1.12.7")
-}
-
-kotlin {
-	compilerOptions {
-		freeCompilerArgs.addAll("-Xjsr305=strict")
-	}
 }
 
 tasks.withType<Test> {
