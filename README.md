@@ -92,6 +92,41 @@ class ExampleException(
     cause = cause
 )   
 ```
+## Adicionando Exception no GlobalExceptionHandler
+
+```php
+@ExceptionHandler(
+  UnexpectedException::class,
+  ServerException::class,
+  ClientException::class
+)
+fun handleProblemDetailException(
+  ex: ProblemDetailException,
+): ResponseEntity<Map<String, Any?>> {
+  val body = ex.toMap()
+  return ResponseEntity.status(ex.httpStatus).body(body)
+} 
+```
+Saida da exception:
+
+```php
+{
+    "type": "UnexpectedException",
+    "title": "Erro",
+    "status": 500,
+    "detail": "{\"exception_code\":1942407959,\"exception_line\":15,\"exception_message\":\"Erro\",\"exception_file\":\"ExampleController.kt\"}",
+    "internal_code": "UNEXPECTED_ERROR",
+    "message": "Erro",
+    "user_message": "Entre em contato com o administrador do sistema",
+    "user_title": "Ocorreu um erro inesperado",
+    "location": "UnexpectedException:40",
+    "trace_id": "trace_id_value",
+    "previous_message": "Erro",
+    "previous_type": "Exception",
+    "previous_code": 1942407959,
+    "previous_location": "ExampleController.kt:15"
+} 
+```
 
 ## Contribuindo
 
