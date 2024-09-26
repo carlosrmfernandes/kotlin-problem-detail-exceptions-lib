@@ -7,6 +7,91 @@ Esse projeto tem por objetivo prover uma biblioteca kotlin (spting framework) qu
 
 ## Instalação
 
+``EM DOCUMENTAÇÃO``
+...
+
+## Criando Exceptions Customizadas
+
+Para usar o pacote recomendamos que sejam criadas excessões extendendo da classe `io.carlosrmfernandes.kotlinproblemdetailexceptions.exceptions` conforme a classe de exemplo abaixo:
+
+```php
+
+use io.carlosrmfernandes.kotlinproblemdetailexceptions.exceptions;
+
+class ClientException( ) : ProblemDetailException( )
+```
+
+Em seguida devemos criar dentro do construtor uma chamada para o construtor da classe Pai passando os parâmetros necessários para a construção da exception.
+
+```php
+
+(
+  title:        'Titulo curto para erro. Deve ser imutável',
+  detail:       'Descrição mais detalhada do erro podendo conter variaveis dinâmicas.' .
+  userTitle:    'Titulo amigavel para usuário final que pode ver o erro',
+  userMessage:  'Detalhamento amigavel para usuário que pode ver o erro',
+  httpStatus:    500,
+  internalCode: 'SHRD0001',
+  cause = cause
+);
+
+```
+
+O resultado final deve ser algo como o exemplo abaixo
+
+```php
+<?php
+
+class ExampleException(
+    httpStatus: HttpStatus? = null,
+    cause: Throwable? = null,
+) : ProblemDetailException(
+    title:        'Titulo curto para erro. Deve ser imutável',
+    detail:       'Descrição mais detalhada do erro podendo conter variaveis dinâmicas.' .
+    userTitle:    'Titulo amigavel para usuário final que pode ver o erro',
+    userMessage:  'Detalhamento amigavel para usuário que pode ver o erro',
+    httpStatus:    500,
+    internalCode: 'SHRD0001',
+    cause = cause
+)
+
+```
+
+Desta maneira é possível ter uma exception bem legível, completa e com uma forma de invocação simples e direta
+
+
+```php
+try {
+    
+} catch (exception: Exception) {
+    throw ExampleException(exception)
+}
+
+```
+
+### Log por Exception
+
+Tambem é possível configurar o log em cada exception usando a opção `$logThrow`. Essa opção permite que possamos
+configurar cada excessão para gerar logs, ou não, independente da configuração geral. Caso ela seja omitida a
+configuração geral de logs será levada em consideração.
+
+Ex:
+
+```php
+
+class ExampleException(
+    cause: Throwable? = null,
+    val logThrow: Boolean = true
+) : ProblemDetailException(
+    title:        'Titulo curto para erro. Deve ser imutável',
+    detail:       'Descrição mais detalhada do erro podendo conter variaveis dinâmicas.' .
+    userTitle:    'Titulo amigavel para usuário final que pode ver o erro',
+    userMessage:  'Detalhamento amigavel para usuário que pode ver o erro',
+    httpStatus:    500,
+    internalCode: 'SHRD0001',
+    cause = cause
+)   
+```
 
 ## Contribuindo
 
@@ -16,4 +101,3 @@ crescimento. Para sugerir uma melhoria use as Issues do github.
 ## Licença
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
