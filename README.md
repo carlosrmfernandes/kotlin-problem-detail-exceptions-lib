@@ -39,7 +39,7 @@ Em seguida devemos criar dentro do construtor uma chamada para o construtor da c
 
 O resultado final deve ser algo como o exemplo abaixo
 
-```
+```php
 class ExampleException(
     httpStatus: HttpStatus? = null,
     cause: Throwable? = null,
